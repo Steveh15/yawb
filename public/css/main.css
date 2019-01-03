@@ -1,0 +1,23 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+  }
+
+  main{
+      padding-top: 70px;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+
+  nav a {
+    border-radius: .25rem;
+  }
+  nav a:hover { 
+    background-color:rgb(114, 112, 112) !important;
+    /* background-color:red !important; */
+   }

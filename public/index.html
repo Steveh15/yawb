@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>YAWB</title>
+
+  <script defer src="/__/firebase/5.7.2/firebase-app.js"></script>
+  <script defer src="/__/firebase/5.7.2/firebase-auth.js"></script>
+  <script defer src="/__/firebase/5.7.2/firebase-firestore.js"></script>
+  <script defer src="/__/firebase/init.js"></script>
+  <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+  <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" integrity="sha256-owX7sroiO/O1a7h3a4X29A1g3QgqdNvijRQ7V5TH45M="
+    crossorigin="anonymous"></script>
+  <script defer src="js/warbands.js"></script>
+  <script defer src="js/fighters.js"></script>
+  <script defer src="js/main.js"></script>
+  <!-- Styles -->
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <span class="">
+      <a class="dropdown navbar-brand nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" data-bind="text: selectedWarband ? selectedWarband().name : ''"></a>
+
+      <div class="
+        dropdown-menu" aria-labelledby="dropdown01">
+        <span data-bind="foreach : exportObj.warbands()">
+          <a class="dropdown-item" data-bind="text:name, click : $root.selectWarband.bind($data, $data)" href="#"></a>
+        </span>
+      </div>
+    </span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+            aria-controls="collapseExample">Toggle browser </a>
+        </li>
+        <li class="nav-item active" data-bind="if : loggedIn() == false, visible : loggedIn() == false">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Log In</a>
+        </li>
+        <li class="nav-item active" data-bind="if : loggedIn() == true, visible : loggedIn() == true">
+          <a class="nav-link" href="#" data-bind="click: signOut">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <main role="main" class="container-fluid">
+
+
+    <div class="row">
+      <ul class="list-inline">
+        <span data-bind="if : loggedIn() == true, visible : loggedIn() == true">
+          <li class="list-inline-item">
+            <button type="button" class="btn btn-primary">Save Deck</button>
+          </li>
+          <li class="list-inline-item">
+            <button type="button" class="btn btn-primary">Load Deck</button>
+          </li>
+          <li class="list-inline-item">
+            <button type="button" class="btn btn-primary">Delete Deck</button>
+          </li>
+        </span>
+        <li class="list-inline-item">
+          <button type="button" class="btn btn-primary">New Deck</button>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-auto">
+        <div class="collapse show" id="collapseExample">
+          <span data-bind="if : selectedWarband, visibe : selectedWarband">
+            <ul class="list-group" data-bind="foreach: selectedFighters">
+              <li class="list-group-item">
+                <strong data-bind="text: $data.captain ? 'Cap: ' : ''"></strong><strong data-bind="text: $data.name"></strong>
+              </li>
+            </ul>
+          </span>
+
+        </div>
+
+      </div>
+      <div class="col-md-auto" id="content">
+        <div class="row">
+
+          <div class="col-md-4">
+            <p>Other Stuff</p>
+
+
+          </div>
+          <div class="col-md-4">
+            <p>Warband browser sidebar</p>
+          </div>
+          <div class="col-md-4">
+            <p>Warband browser sidebar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </main><!-- /.container -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Save stuff here
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click : signIn.bind($data,'Google')">Google</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
