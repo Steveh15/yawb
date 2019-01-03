@@ -1,10 +1,17 @@
+
+body {
+  font-family: 'Noto Serif TC', serif;
+  margin: 2em;
+}
+
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
   }
 
   main{
-      padding-top: 70px;
+      padding-top: 40px;
   }
 
   @media (min-width: 768px) {
@@ -21,3 +28,119 @@
     background-color:rgb(114, 112, 112) !important;
     /* background-color:red !important; */
    }
+
+
+
+
+
+   .warband-table{
+    border: 1px solid red;
+    float: left;
+    clear: left;
+  }
+  
+  .margin-left{
+    margin-left: 20px;
+  }
+  
+  .fighter-char-div{
+    font-size: 18pt;
+    text-align: center;
+  }
+  
+
+  .attacktable{
+    border: 1px solid green;
+    table-layout:fixed;
+    width:220px;
+  }
+  
+  .fightertable{
+    /* border: 3px solid royalblue; */
+    table-layout:fixed;
+    width: 450px;
+    border-collapse:collapse;
+  }
+  
+  table td{
+    /* border:1px solid #FF0000; */
+    vertical-align: top;
+    }
+  
+
+
+/*  */
+/*  */
+/* Font stuff */
+/*  */
+/*  */
+
+@font-face {
+  font-family: 'wu-fonts';
+  src: url('../font/wu-fonts.eot?31391772');
+  src: url('../font/wu-fonts.eot?31391772#iefix') format('embedded-opentype'),
+       url('../font/wu-fonts.woff2?31391772') format('woff2'),
+       url('../font/wu-fonts.woff?31391772') format('woff'),
+       url('../font/wu-fonts.ttf?31391772') format('truetype'),
+       url('../font/wu-fonts.svg?31391772#wu-fonts') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'wu-fonts';
+    src: url('../font/wu-fonts.svg?99681080#wu-fonts') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "wu-fonts";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .05em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  /* margin-left: .2em; */
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon-full-support:before { content: '\e800'; } /* '' */
+.icon-half-support:before { content: '\e801'; } /* '' */
+.icon-hammer:before { content: '\e802'; } /* '' */
+.icon-range:before { content: '\e803'; } /* '' */
+.icon-shield:before { content: '\e804'; } /* '' */
+.icon-sword:before { content: '\e805'; } /* '' */
+.icon-crit:before { content: '\e806'; } /* '' */
+.icon-crown:before { content: '\e807'; } /* '' */
+.icon-damage:before { content: '\e808'; } /* '' */
+.icon-dodge:before { content: '\e809'; } /* '' */
+.icon-wound:before { content: '\f111'; color: rgb(161, 11, 9)} /* '' */
+

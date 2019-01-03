@@ -40,25 +40,41 @@ DeckBuilderViewModel = function () {
 
     self.loggedIn = ko.observable(-1); //Neither true nor false show log in options won't be shown until login state verified
 
+    self.getWarbandFighters = function (warband) {
+        if (warband == null) {
+            return [];
+        } else {
+            return exportObj.fighters().filter(function (fighter) {
+                return fighter.warband === warband.name;
+            });
+        }
+    }
 
     self.selectedWarband = ko.observable(exportObj.warbands()[0]);
-
+    self.selectedFighter = ko.observable(self.getWarbandFighters(self.selectedWarband())[0]);
 
 
     self.selectWarband = function (warband) {
         self.selectedWarband(warband)
     }
 
-    // Fighter Functionality
-    self.selectedFighters = ko.computed(function () {
-        if (self.selectedWarband() == null) {
-            return [];
-        } else {
-            return exportObj.fighters().filter(function (fighter) {
-                return fighter.warband === self.selectedWarband().name;
-            });
+    self.selectFighter = function (fighter) {
+        if (fighter != null) {
+            self.selectedFighter(fighter);
         }
+    };
+
+    this.warbandFighters = ko.computed(function () {
+        return self.getWarbandFighters(self.selectedWarband());
+    }, this);
+
+    self.selectedWarband.subscribe(function (newWarband) {
+        self.selectedFighter(self.getWarbandFighters(newWarband)[0]);
     });
+
+
+
+
 
 
     //     self.deckList = ko.observable([]); // All the current decks (one per warband)

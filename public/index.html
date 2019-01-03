@@ -22,8 +22,9 @@
   <script defer src="js/fighters.js"></script>
   <script defer src="js/main.js"></script>
   <!-- Styles -->
-  <link href="css/main.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
 
 </head>
 
@@ -49,8 +50,8 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-            aria-controls="collapseExample">Toggle browser </a>
+          <a class="nav-link" data-toggle="collapse" href="#warbandBrowser" role="button" aria-expanded="false"
+            aria-controls="warbandBrowser">Toggle browser </a>
         </li>
         <li class="nav-item active" data-bind="if : loggedIn() == false, visible : loggedIn() == false">
           <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Log In</a>
@@ -84,32 +85,139 @@
         </li>
       </ul>
     </div>
+
+
+
+
     <div class="row">
-      <div class="col-md-auto">
-        <div class="collapse show" id="collapseExample">
-          <span data-bind="if : selectedWarband, visibe : selectedWarband">
-            <ul class="list-group" data-bind="foreach: selectedFighters">
-              <li class="list-group-item">
-                <strong data-bind="text: $data.captain ? 'Cap: ' : ''"></strong><strong data-bind="text: $data.name"></strong>
-              </li>
+      <!-- Warband browser column -->
+      <div class="col-md-auto border" data-bind="if : selectedWarband, visible : selectedWarband">
+        <!-- Card container -->
+        <div class="card collapse show" id="warbandBrowser" data-bind="if : selectedWarband, visible : selectedWarband">
+          <div class="card-body">
+            <!-- Fighter List -->
+            <ul class="list-group" data-bind="foreach: warbandFighters">
+              <a href="#" data-bind="
+                event : {mouseover : $root.selectFighter.bind($data)}, 
+                attr: $data.name == $root.selectedFighter().name ?
+                  {'class':'font-weight-bold list-group-item list-group-item-action active'} :
+                  {'class':'font-weight-bold list-group-item list-group-item-action'}">
+                <i data-bind="visible: $data.captain" class="icon-crown"></i> <span data-bind="text: $data.name"></span>
+              </a>
             </ul>
-          </span>
-
-        </div>
-
-      </div>
-      <div class="col-md-auto" id="content">
-        <div class="row">
-
-          <div class="col-md-4">
-            <p>Other Stuff</p>
-
-
+            <!-- Fighter Browser -->
+            <div class="card" data-bind="if: selectedFighter()">
+              <div class="card-body">
+                <span data-bind="text: selectedFighter().name"></span>
+                <table class="fightertable table-bordered">
+                  <tbody>
+                    <tr data-bind="if : (selectedFighter().magic || selectedFighter().inspiredVersion ? true : false) &amp;&amp; selectedFighter().inspiredVersion.magic">
+                      <td>
+                        <div data-bind="if: selectedFighter().magic"><strong>Magic: </strong><span data-bind="text:  selectedFighter().magic"></span></div>
+                      </td>
+                      <td>
+                        <div data-bind="if: selectedFighter().inspiredVersion.magic"><strong>Magic: </strong><span
+                            data-bind="text:  selectedFighter().inspiredVersion.magic"></span></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="fighter-char-div"><span><i class="icon-range"></i><span data-bind="text:selectedFighter().movement"></span></span><span
+                          class="margin-left"><span data-bind="html: selectedFighter().defence.char"></span><span
+                            data-bind="text:selectedFighter().defence.value"></span></span><span class="margin-left"><i
+                            class="icon-wound"></i><span data-bind="text:selectedFighter().wounds"></span></span></td>
+                      <td class="fighter-char-div" data-bind="if: $root.selectedFighter().inspiredVersion"><span><i
+                            class="icon-range"></i><span data-bind="text:selectedFighter().inspiredVersion.movement"></span></span><span
+                          class="margin-left"><span data-bind="html: selectedFighter().inspiredVersion.defence.char"></span><span
+                            data-bind="text:selectedFighter().inspiredVersion.defence.value"></span></span><span class="margin-left"><i
+                            class="icon-wound"></i><span data-bind="text:selectedFighter().inspiredVersion.wounds"></span></span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table class="attacktable">
+                          <tbody data-bind="foreach: selectedFighter().attacks">
+                            <tr>
+                              <td>
+                                <div class="attack-title" data-bind="text: name"></div>
+                                <div class="fighter-char-div"><span><i class="icon-range"></i><span data-bind="text : range"></span></span><span
+                                    class="margin-left"><span data-bind="html: char"></span><span data-bind="text:value"></span></span><span
+                                    class="margin-left"><i class="icon-damage"></i><span data-bind="text : dmg"></span></span></div>
+                                <div class="attack-keyboard" data-bind="if : $data.text"><span data-bind="text : $data.text"></span></div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td data-bind="if : $root.selectedFighter().inspiredVersion">
+                        <table class="attacktable">
+                          <tbody data-bind="foreach:  selectedFighter().inspiredVersion.attacks">
+                            <tr>
+                              <td>
+                                <div class="attack-title" data-bind="text: name"></div>
+                                <div class="fighter-char-div"><span><i class="icon-range"></i><span data-bind="text : range"></span></span><span
+                                    class="margin-left"><span data-bind="html: char"></span><span data-bind="text: value"></span></span><span
+                                    class="margin-left"><i class="icon-damage"></i><span data-bind="text : dmg"></span></span></div>
+                                <div class="attack-keyboard" data-bind="if : $data.text"><span data-bind="text : $data.text"></span></div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table class="attacktable" data-bind="if: selectedFighter().magic, visible: selectedFighter().magic">
+                          <tbody data-bind="foreach: selectedFighter().spells">
+                            <tr>
+                              <td>
+                                <div data-bind="text: name"></div><span class="testclass"><b class="icon-range">: </b><span
+                                    data-bind="text : range"> </span><b class="icon-damage">: </b><span data-bind="text : dmg">
+                                  </span></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td data-bind="if : $root.selectedFighter().inspiredVersion">
+                        <table class="attacktable" data-bind="if: selectedFighter().inspiredVersion.magic, visible: selectedFighter().inspiredVersion.magic">
+                          <tbody data-bind="foreach: selectedFighter().inspiredVersion.spells">
+                            <tr>
+                              <td>
+                                <div data-bind="text: name"></div><span class="testclass"><b class="icon-range">: </b><span
+                                    data-bind="text : range"> </span><b class="icon-damage">: </b><span data-bind="text : dmg">
+                                  </span></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div><span data-bind="html:  selectedFighter().text"> </span></div>
+                        <div data-bind="if : $root.selectedFighter().inspiredVersion"><strong>Inspire condition:</strong><span
+                            data-bind="html:  selectedFighter().inspire_cond"></span></div>
+                      </td>
+                      <td data-bind="if : $root.selectedFighter().inspiredVersion"><span data-bind="html:  selectedFighter().inspiredVersion.text">
+                        </span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <div class="col-md-4">
+        </div>
+      </div>
+
+
+      <div class="col-md-auto border" id="content">
+        <div class="row">
+          <div class="col-md-4 border">
+            <p>Other Stuff</p>
+          </div>
+          <div class="col-md-4 border">
             <p>Warband browser sidebar</p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 border">
             <p>Warband browser sidebar</p>
           </div>
         </div>
