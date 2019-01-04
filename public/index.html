@@ -20,6 +20,7 @@
     crossorigin="anonymous"></script>
   <script defer src="js/warbands.js"></script>
   <script defer src="js/fighters.js"></script>
+  <script defer src="js/objectives.js"></script>
   <script defer src="js/main.js"></script>
   <!-- Styles -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -68,22 +69,31 @@
 
 
     <div class="row">
-      <ul class="list-inline">
-        <span data-bind="if : loggedIn() == true, visible : loggedIn() == true">
+
+      <div class="col-md-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Deck Name" aria-label="Deckname" aria-describedby="basic-addon1">
+        </div>
+      </div>
+      <div class="col">
+        <ul class="list-inline">
+          <span data-bind="if : loggedIn() == true, visible : loggedIn() == true">
+            <li class="list-inline-item">
+              <button type="button" class="btn btn-primary">Save Deck</button>
+            </li>
+            <li class="list-inline-item">
+              <button type="button" class="btn btn-primary">Load Deck</button>
+            </li>
+            <li class="list-inline-item">
+              <button type="button" class="btn btn-primary">Delete Deck</button>
+            </li>
+          </span>
           <li class="list-inline-item">
-            <button type="button" class="btn btn-primary">Save Deck</button>
+            <button type="button" class="btn btn-primary">New Deck</button>
           </li>
-          <li class="list-inline-item">
-            <button type="button" class="btn btn-primary">Load Deck</button>
-          </li>
-          <li class="list-inline-item">
-            <button type="button" class="btn btn-primary">Delete Deck</button>
-          </li>
-        </span>
-        <li class="list-inline-item">
-          <button type="button" class="btn btn-primary">New Deck</button>
-        </li>
-      </ul>
+        </ul>
+      </div>
+
     </div>
 
 
@@ -211,16 +221,42 @@
       </div>
 
 
-      <div class="col-md-auto border" id="content">
+      <div class="col" id="content">
         <div class="row">
-          <div class="col-md-4 border">
-            <p>Other Stuff</p>
+          <div class="col border">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Filters</h5>
+                <p class="card-text">Put filter stuff here</p>
+              </div>
+            </div>
+            <!-- <div data-bind="foreach: selectedWarbandObjectives">
+              <div>
+                <label>
+                  <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.selectedCards" />
+                  <span data-bind="text: $data.name"></span>
+                </label>
+              </div>
+            </div> -->
+            <ul class="list-group" data-bind="foreach: selectedWarbandObjectives">
+              <li data-bind="
+              text: name,
+              event : {click : $root.selectCard.bind($data)},
+              attr: $root.includesCards($root.selectedCards(), $data) ?
+                {'class':'list-group-item active'} : 
+                {'class':'list-group-item'} "></li>
+            </ul>
           </div>
-          <div class="col-md-4 border">
+          <div class="col border">
+            <ul class="list-group" data-bind="foreach: selectedCards">
+              <li class="list-group-item" data-bind="text: name"></li>
+            </ul>
+          </div>
+          <div class="col border">
             <p>Warband browser sidebar</p>
           </div>
-          <div class="col-md-4 border">
-            <p>Warband browser sidebar</p>
+          <div class="col border">
+            <p>Card display</p>
           </div>
         </div>
       </div>

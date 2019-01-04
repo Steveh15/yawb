@@ -50,8 +50,30 @@ DeckBuilderViewModel = function () {
         }
     }
 
+    self.getWarbandObjectives = function (warband) {
+        if (warband == null) {
+            return [];
+        } else {
+            return exportObj.objectives().filter(function (objective) {
+                return objective.warband === warband.name || (objective.warband == null);
+            });
+
+        }
+    }
+
     self.selectedWarband = ko.observable(exportObj.warbands()[0]);
     self.selectedFighter = ko.observable(self.getWarbandFighters(self.selectedWarband())[0]);
+
+    self.selectedWarbandObjectives = ko.computed(function () {
+        return self.getWarbandObjectives(self.selectedWarband());
+    }, this);
+
+    self.filteredObjectives = ko.computed(function () {
+        return self.selectedWarbandObjectives();
+    }, this);
+
+    self.selectedCards = ko.observableArray([]);
+
 
 
     self.selectWarband = function (warband) {
@@ -73,6 +95,46 @@ DeckBuilderViewModel = function () {
     });
 
 
+    self.includesCards = function (cardArray, card) {
+        if (cardArray === undefined || cardArray.length == 0) {
+            return false;
+        } else {
+            var check = false;
+            varCheck = cardArray.forEach(element => {
+                if ((element.setID == card.setID) && (element.cardID == card.cardID)) {
+                    check = true;
+                }
+            });
+            return check;
+        }
+    }
+
+    self.selectCard = function (card) {
+        if (self.includesCards(self.selectedCards(), card) == false) {
+            self.selectedCards.push(card);
+        } else {
+            self.selectedCards.remove(
+                function (item) { return item.setID == card.setID && item.cardID == card.cardID; }
+            );
+        }
+
+        self.selectedCards.sort(function (left, right) {
+            console.log(left.setID);
+            if (left.setID < right.setID) {
+                return -1;
+            } else if (left.setID < right.setID) {
+                return +1;
+            } else if (left.setID == right.setID) {
+                if (left.cardID < right.cardID) {
+                    return -1;
+                } else if (left.cardID < right.cardID) {
+                    return +1;
+                } else if (left.cardID == right.cardID) {
+                    return 0;
+                }
+            }
+        })
+    }
 
 
 
