@@ -91,10 +91,11 @@
 
     <div class="row">
       <!-- Warband browser column -->
-      <div class="col-md-auto border" data-bind="if : selectedWarband, visible : selectedWarband">
+      <div class="col-md-auto border collapse show" id="warbandBrowser" data-bind="if : selectedWarband, visible : selectedWarband">
         <!-- Card container -->
-        <div class="card collapse show" id="warbandBrowser" data-bind="if : selectedWarband, visible : selectedWarband">
-          <div class="card-body">
+        <!-- <div class="collapse show" id="warbandBrowser"> -->
+        <div>
+          <div>
             <!-- Fighter List -->
             <ul class="list-group" data-bind="foreach: warbandFighters">
               <a href="#" data-bind="
@@ -106,9 +107,10 @@
               </a>
             </ul>
             <!-- Fighter Browser -->
-            <div class="card" data-bind="if: selectedFighter()">
-              <div class="card-body">
-                <span data-bind="text: selectedFighter().name"></span>
+            <div data-bind="if: selectedFighter()">
+              <div>
+                <br>
+                <h5 class="font-weight-bold text-center" data-bind="text: selectedFighter().name"></h5>
                 <table class="fightertable table-bordered">
                   <tbody>
                     <tr data-bind="if : (selectedFighter().magic || selectedFighter().inspiredVersion ? true : false) &amp;&amp; selectedFighter().inspiredVersion.magic">
