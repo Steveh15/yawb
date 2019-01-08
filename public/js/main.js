@@ -119,7 +119,6 @@ DeckBuilderViewModel = function () {
         }
 
         self.selectedCards.sort(function (left, right) {
-            console.log(left.setID);
             if (left.setID < right.setID) {
                 return -1;
             } else if (left.setID < right.setID) {
