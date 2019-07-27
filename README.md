@@ -1,2 +1,2 @@
 # yawb
-Warhammer Underworlds deck builder
+Yet another waband builder, currently hosted on firebase : https://yawb-eeab4.firebaseapp.com/
